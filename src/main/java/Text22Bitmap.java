@@ -10,8 +10,11 @@ import java.io.IOException;
 public class Text22Bitmap {
 
 
+    static {
+        System.setProperty("com.sun.media.jai.disableMediaLib", "true");
+    }
 
-private static final Text22Bitmap INSTANCE= new Text22Bitmap();
+    private static final Text22Bitmap INSTANCE = new Text22Bitmap();
 
 
     //de volgende waarden zijn "good enough" voor 58mm papier, vooral gevonden door trail&error

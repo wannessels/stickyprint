@@ -12,6 +12,6 @@ public class StickyprintMainRunner {
     }
 
     public ConfigurableApplicationContext bootStickyprintApplication() {
-        return new SpringApplicationBuilder().sources(StickyprintApplication.class).run("--spring.config.location=classpath:/application-local.properties");
+        return new SpringApplicationBuilder().sources(StickyprintApplication.class).run("--spring.api.location=classpath:/application-local.properties");
     }
 }

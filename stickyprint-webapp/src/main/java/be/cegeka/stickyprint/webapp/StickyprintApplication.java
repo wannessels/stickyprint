@@ -1,6 +1,8 @@
 package be.cegeka.stickyprint.webapp;
 
 
+import be.cegeka.stickyprint.core.api.CoreConfig;
+import be.cegeka.stickyprint.port.rest.config.PortRestConfig;
 import be.cegeka.stickyprint.webapp.admin.config.AdminConfig;
 import be.cegeka.stickyprint.webapp.property.config.PropertyReadingConfig;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,7 +16,9 @@ import org.springframework.context.annotation.Import;
 @EnableAutoConfiguration(exclude = {ActiveMQAutoConfiguration.class, LiquibaseAutoConfiguration.class})
 @Import({
         PropertyReadingConfig.class,
-        AdminConfig.class
+        AdminConfig.class,
+        PortRestConfig.class,
+        CoreConfig.class
 })
 public class StickyprintApplication {
 }

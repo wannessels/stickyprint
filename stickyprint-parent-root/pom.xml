@@ -70,7 +70,7 @@
         <!--</repository>-->
 
         <!-- TODO uitzoeken of cegeka een deftige public group heeft. Is die ook aanspreekbaar zonder vpn bijvoorbeeld -->
-        <!-- Id must be central to override the config of the central repo that maven adds automatically to each pom file. Also see effective pom -->
+        <!-- Id must be central to override the api of the central repo that maven adds automatically to each pom file. Also see effective pom -->
         <!--<repository>-->
             <!--<id>central</id>-->
             <!--<name>Cegeka public group</name>-->

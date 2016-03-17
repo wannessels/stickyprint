@@ -17,6 +17,9 @@
         <module>stickyprint-war</module>
         <module>stickyprint-webapp</module>
         <module>stickyprint-test-e2e</module>
+        <module>stickyprint-port-rest</module>
+        <module>stickyprint-core</module>
+        <module>stickyprint-core-api</module>
 
     </modules>
 

@@ -17,6 +17,16 @@
 
     <dependencies>
 
+        <!--stickyprint-->
+        <dependency>
+            <groupId>be.cegeka.stickyprint</groupId>
+            <artifactId>stickyprint-port-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.cegeka.stickyprint</groupId>
+            <artifactId>stickyprint-core</artifactId>
+        </dependency>
+
         <!-- Spring boot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

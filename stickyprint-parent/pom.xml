@@ -26,6 +26,16 @@
                 <artifactId>stickyprint-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>be.cegeka.stickyprint</groupId>
+                <artifactId>stickyprint-port-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>be.cegeka.stickyprint</groupId>
+                <artifactId>stickyprint-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>be.cegeka.stickyprint</groupId>
+    <artifactId>stickyprint-parent-root</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Stickyprint root parent pom</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <java.version>1.8</java.version>
+    </properties>
+
+    <distributionManagement>
+        <!--TODO Jozef: hier de cegeka release en snapshot repo in zetten
+            Dit zijn de repos waar by default naar gedeployed wordt als ge mvn deploy doet
+            waar vinden we die info? Mogen we daar zomaar naar releasen?
+        -->
+
+    </distributionManagement>
+
+    <repositories>
+
+        <repository>
+            <!--TODO normaal zit deze best achter een public group, maar bij gebrek aan eentje, nu expliciet hier gezet-->
+            <id>spring io</id>
+            <name>Spring Io Repository</name>
+            <url>http://repo.spring.io</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <!-- releases should never be updated while keeping the same version number -->
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+
+        <!--TODO jozef: hier ook de cegeka release en snapshot repo in zetten, snapshot repo met
+        <repository>
+            <id>cegeka.release</id>
+            <name>Cegeka Releases Repository</name>
+            <url>http://nexus...</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository> -->
+
+        <!--<repository>-->
+            <!--<id>cegeka.snapshots</id>-->
+            <!--<url>http://nexus</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+
+        <!-- TODO uitzoeken of cegeka een deftige public group heeft. Is die ook aanspreekbaar zonder vpn bijvoorbeeld -->
+        <!-- Id must be central to override the config of the central repo that maven adds automatically to each pom file. Also see effective pom -->
+        <!--<repository>-->
+            <!--<id>central</id>-->
+            <!--<name>Cegeka public group</name>-->
+            <!--<url>http://nexus...</url>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    </repositories>
+
+    <pluginRepositories>
+
+        <pluginRepository>
+            <!--TODO normaal zit deze best achter een public group, maar bij gebrek aan eentje, nu expliciet hier gezet-->
+            <id>spring io</id>
+            <name>Spring Io Repository</name>
+            <url>http://repo.spring.io</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <!-- releases should never be updated while keeping the same version number -->
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+
+        <!--<pluginRepository>-->
+            <!--<id>cegeka.plugin</id>-->
+            <!--<name>Cegeka plugin repo</name>-->
+            <!--<url>http://nexus</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+            <!--</releases>-->
+        <!--</pluginRepository>-->
+    </pluginRepositories>
+
+</project>

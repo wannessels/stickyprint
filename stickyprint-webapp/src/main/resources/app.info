@@ -1,0 +1,15 @@
+info.app.name=Stickyprint
+
+info.app.maven.name=${project.name}
+info.app.maven.artifact=${project.artifactId}
+info.app.maven.groupid=${project.groupId}
+info.app.maven.version=${project.version}
+info.app.maven.buildtime=${timestamp}
+info.app.maven.mavenversion=${maven.build.version}
+info.app.maven.javaversion=${java.version}
+
+info.app.git.branch=${git.branch}
+info.app.git.commit=${git.commit.id}
+info.app.git.committime=${git.commit.time}
+
+info.app.email=wannes.sels@cegeka.be, jo.vanthournout@cegeka.be

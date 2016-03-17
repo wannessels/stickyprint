@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>be.cegeka.stickyprint</groupId>
+        <artifactId>stickyprint-parent-plugin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../stickyprint-parent-plugin</relativePath>
+    </parent>
+
+    <artifactId>stickyprint-parent-dependency</artifactId>
+    <packaging>pom</packaging>
+    <name>Stickyprint dependency parent pom</name>
+
+    <properties>
+        <spring.platform.version>2.0.3.RELEASE</spring.platform.version>
+        <assertj.version>3.3.0</assertj.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Bom import voor spring boot
+                http://docs.spring.io/platform/docs/current/reference/htmlsingle/#appendix-dependency-versions
+            -->
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- assertj -->
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <scope>test</scope>
+                <version>${assertj.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+
+
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>be.cegeka.stickyprint</groupId>
+        <artifactId>stickyprint-parent-root</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../stickyprint-parent-root</relativePath>
+    </parent>
+
+    <artifactId>stickyprint-parent-plugin</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Stickyprint plugin parent pom</name>
+
+    <properties>
+        <!-- plugin versions in plugin management of plugins that are automagically
+            bound to the maven lifecycle. No need to specify these plugins within the
+            plugin-tag, maven adds them for you http://maven.apache.org/ref/3.2.5/maven-core/default-bindings.html -->
+        <plugin.clean.version>2.6.1</plugin.clean.version>
+        <plugin.resources.version>2.7</plugin.resources.version>
+        <plugin.compiler.version>3.3</plugin.compiler.version>
+        <plugin.surefire.version>2.18.1</plugin.surefire.version>
+        <plugin.failsafe.version>2.18.1</plugin.failsafe.version>
+        <plugin.jar.version>2.6</plugin.jar.version>
+        <plugin.war.version>2.6</plugin.war.version>
+        <plugin.install.version>2.5.2</plugin.install.version>
+        <plugin.assembly.version>2.5.2</plugin.assembly.version>
+        <plugin.deploy.version>2.8.2</plugin.deploy.version>
+        <plugin.site.version>3.4</plugin.site.version>
+        <plugin.sql.version>1.5</plugin.sql.version>
+        <plugin.ear.version>2.10.1</plugin.ear.version>
+        <plugin.git-commit-id.version>2.2.0</plugin.git-commit-id.version>
+
+        <!-- Versions of plugins in pluginmanagement that are not automagically
+            bound. If you want to use these plugins, specify them in the plugin tag of
+            your project -->
+        <plugin.dependency.version>2.10</plugin.dependency.version>
+        <plugin.source.version>2.4</plugin.source.version>
+        <plugin.enforcer.version>1.4</plugin.enforcer.version>
+
+    </properties>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <!-- plugins bound by maven to the maven lifecycle
+                    For these we keep
+                    the default plugin to phase mapping as stated here http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Built-in_Lifecycle_Bindings
+                    -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${plugin.clean.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${plugin.resources.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin.compiler.version}</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${plugin.war.version}</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <archiveClasses>true</archiveClasses>
+                        <attachClasses>true</attachClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>${plugin.ear.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.surefire.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${plugin.install.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${plugin.assembly.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${plugin.deploy.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${plugin.site.version}</version>
+                </plugin>
+
+
+                <!-- Non maven lifecycle plugins
+                Note: if no phase is defined, the default phase is used. This can be found in the documentation of that plugin
+                -->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${plugin.dependency.version}</version>
+                    <executions>
+                        <execution>
+                            <id>analyze-only</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <!-- default binding to verify phase -->
+                            <configuration>
+                                <failOnWarning>true</failOnWarning>
+                                <ignoreNonCompile>true</ignoreNonCompile>
+                                <outputXML>true</outputXML>
+                                <ignoredUnusedDeclaredDependencies>
+                                    <ignoredUnusedDeclaredDependency>org.projectlombok:lombok
+                                    </ignoredUnusedDeclaredDependency>
+                                </ignoredUnusedDeclaredDependencies>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${plugin.jar.version}</version>
+                    <executions>
+                        <execution>
+                            <id>testjar</id>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                            <configuration>
+                                <includes>
+                                    <include>**/*.*</include>
+                                </includes>
+                            </configuration>
+                            <!-- default binding to package phase -->
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <!--
+                        - Enforces that commons-logging is not on the classpath so the
+                        bindings from slf4j for commons logging can be used
+                        - Enforced that all plugins have a specific version defined (otherwise maven
+                        takes the highest number) -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${plugin.enforcer.version}</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-banned-dependencies</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <!-- default binding to validate phase -->
+                            <configuration>
+                                <rules>
+                                    <bannedDependencies>
+                                        <searchTransitive>true</searchTransitive>
+                                        <excludes>
+                                            <exclude>commons-logging</exclude>
+                                            <exclude>log4j</exclude>
+                                        </excludes>
+                                    </bannedDependencies>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>enforce-maven-best-practices</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <!-- default binding to validate phase -->
+                            <configuration>
+                                <rules>
+                                    <requirePluginVersions>
+                                        <message>Best Practice is to always define plugin versions!
+                                            Put the version in the parent and define plugin under
+                                            plugin management, then declare the plugin in the project you want
+                                            it executed
+                                        </message>
+                                        <phases>clean,install,deploy,site</phases>
+                                    </requirePluginVersions>
+                                    <requireUpperBoundDeps/>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${plugin.source.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                            <!-- default binding to package phase -->
+                        </execution>
+                        <execution>
+                            <id>attach test sources</id>
+                            <goals>
+                                <goal>test-jar-no-fork</goal>
+                            </goals>
+                            <!-- default binding to package phase -->
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${plugin.git-commit-id.version}</version>
+                </plugin>
+
+
+
+            </plugins>
+        </pluginManagement>
+
+        <!-- Put plugins that should be applied to all the projects inheriting
+            from this parent here. Global configuration and versions should be defined
+            in the plugin management part of the pom
+            -->
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <!-- all child projects will produce test-jars -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <trimStackTrace>false</trimStackTrace>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                        <exclude>**/*AcceptanceTest.java</exclude>
+                        <exclude>**/*E2ETest.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>unit-tests</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*IntegrationTest.java</exclude>
+                                <exclude>**/*AcceptanceTest.java</exclude>
+                                <exclude>**/*E2ETest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${plugin.surefire.version}</version>
+                        <configuration>
+                            <skipTests>false</skipTests>
+                            <skip>false</skip>
+                            <includes>
+                                <include>**/*IntegrationTest.java</include>
+                                <include>**/*E2ETest.java</include>
+                                <include>**/*AcceptanceTest.java</include>
+                            </includes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <skipTests>false</skipTests>
+                                    <excludes>
+                                        <exclude>none</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>**/*IntegrationTest.java</include>
+                                        <include>**/*E2ETest.java</include>
+                                        <include>**/*AcceptanceTest.java</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

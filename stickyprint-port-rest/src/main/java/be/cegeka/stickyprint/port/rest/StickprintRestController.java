@@ -2,6 +2,7 @@ package be.cegeka.stickyprint.port.rest;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
         value = "/public",
         produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 public class StickprintRestController {
+
+    @Autowired
+    private PrintingApplicationService
 
     @RequestMapping(value = "/print")
     public ResponseEntity<String> print(

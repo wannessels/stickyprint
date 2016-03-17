@@ -24,6 +24,10 @@
         </dependency>
         <dependency>
             <groupId>be.cegeka.stickyprint</groupId>
+            <artifactId>stickyprint-port-jposprinter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>be.cegeka.stickyprint</groupId>
             <artifactId>stickyprint-core</artifactId>
         </dependency>
 

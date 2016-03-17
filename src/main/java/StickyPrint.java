@@ -9,7 +9,7 @@ public class StickyPrint {
 
     public static void main(String[] args) throws JposException, IOException {
 
-        File bitmap = Text22Bitmap.get().createBitmap("test", "testlijn2");
+        File bitmap = Text22Bitmap.get().createBitmap("De Slimste", "   Mens");
         Printer printer = PrinterFactory.get().createPrinter();
         printer.print(bitmap);
 

@@ -1,4 +1,4 @@
-package be.cegeka.stickyprint.core.api;
+package be.cegeka.stickyprint.core.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

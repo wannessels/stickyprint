@@ -41,6 +41,11 @@
                 <artifactId>stickyprint-core-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>be.cegeka.stickyprint</groupId>
+                <artifactId>stickyprint-port-jposprinter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

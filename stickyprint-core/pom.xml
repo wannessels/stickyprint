@@ -19,7 +19,7 @@
 
     <dependencies>
 
-        <!-- -->
+        <!-- stickyprint -->
         <dependency>
             <groupId>be.cegeka.stickyprint</groupId>
             <artifactId>stickyprint-core-api</artifactId>

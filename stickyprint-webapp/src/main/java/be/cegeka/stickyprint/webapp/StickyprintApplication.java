@@ -1,7 +1,8 @@
 package be.cegeka.stickyprint.webapp;
 
 
-import be.cegeka.stickyprint.core.api.CoreConfig;
+import be.cegeka.stickyprint.core.config.CoreConfig;
+import be.cegeka.stickyprint.port.jposprinter.config.PortJposPrinterConfig;
 import be.cegeka.stickyprint.port.rest.config.PortRestConfig;
 import be.cegeka.stickyprint.webapp.admin.config.AdminConfig;
 import be.cegeka.stickyprint.webapp.property.config.PropertyReadingConfig;
@@ -18,7 +19,8 @@ import org.springframework.context.annotation.Import;
         PropertyReadingConfig.class,
         AdminConfig.class,
         PortRestConfig.class,
-        CoreConfig.class
+        CoreConfig.class,
+        PortJposPrinterConfig.class
 })
 public class StickyprintApplication {
 }

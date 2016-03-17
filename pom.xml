@@ -20,6 +20,7 @@
         <module>stickyprint-port-rest</module>
         <module>stickyprint-core</module>
         <module>stickyprint-core-api</module>
+        <module>stickyprint-port-jposprinter</module>
 
     </modules>
 

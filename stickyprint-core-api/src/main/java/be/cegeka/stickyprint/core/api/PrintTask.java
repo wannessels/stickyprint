@@ -3,8 +3,7 @@ package be.cegeka.stickyprint.core.api;
 
 import lombok.*;
 
-@AllArgsConstructor(staticName = "aPrintTaskToPrint")
-@RequiredArgsConstructor(staticName = "aPrintTaskToPrint")
+@AllArgsConstructor(staticName = "aPrintTask")
 @EqualsAndHashCode
 @ToString
 @Value

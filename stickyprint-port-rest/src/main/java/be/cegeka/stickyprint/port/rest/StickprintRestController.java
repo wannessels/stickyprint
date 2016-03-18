@@ -1,18 +1,24 @@
 package be.cegeka.stickyprint.port.rest;
 
 
-import be.cegeka.stickyprint.core.api.PrintLine;
-import be.cegeka.stickyprint.core.api.PrintTask;
-import be.cegeka.stickyprint.core.api.PrintingApplicationService;
+import be.cegeka.stickyprint.core.api.*;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 @RestController
 @Slf4j
@@ -24,6 +30,10 @@ public class StickprintRestController {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private PrintingApplicationService printingApplicationService;
+
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private ImageRenderService imageRenderService;
 
     @RequestMapping(value = "/print")
     public ResponseEntity<String> print(
@@ -43,5 +53,22 @@ public class StickprintRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/preview")
+    @SneakyThrows
+    public ResponseEntity<InputStreamResource> preview(
+            @RequestParam(value = "html", required = true) String htmlToPreviewAsStickyCard) {
+
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard));
+
+        BufferedImage bufferedImage = imageRenderResult.getResult();
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpg", os);
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(is));
+
+    }
 
 }

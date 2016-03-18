@@ -20,11 +20,15 @@
     function generatePreview() {
         jQuery("#preview").prop('src',"public/preview?html=" + tinyMCE.activeEditor.getContent());
     }
+    function print() {
+        jQuery.get("public/printpreview?html=" + tinyMCE.activeEditor.getContent());
+    }
 </script>
 <form method="get" action="public/preview" target="_self">
     <textarea id="html" name="html">Hello, World!</textarea>
 
     <input type="button" value="Preview" onclick="generatePreview();"/>
+    <input type="button" value="Print" onclick="print();"/>
 </form>
 <img id="preview"/>
 </body>

@@ -9,6 +9,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 @Service
 public class PrintingApplicationServiceImpl implements PrintingApplicationService {
@@ -39,11 +40,11 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
     @Override
     public ImageRenderResult print(HtmlSnippet htmlSnippet) {
         ImageRenderResult imageRenderResult = imageRenderService.renderImage(htmlSnippet);
-        printer.print(imageRenderResult.getResult());
+        printer.print(rotate90DX(imageRenderResult.getResult()));
         return imageRenderResult;
     }
 
-    public BufferedImage createBitmap(PrintLine lijn1, PrintLine lijn2) {
+   public BufferedImage createBitmap(PrintLine lijn1, PrintLine lijn2) {
 
         int imgHeight = Printer.HEIGHT_58MM;
         int imgWidth = getMinimumWidth(Printer.WIDTH_120MM, lijn1);

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -53,7 +54,14 @@ public class ImageRenderServiceImpl implements ImageRenderService{
         contentCanvas.getConfig().setLoadImages(true);
         contentCanvas.getConfig().setLoadBackgroundImages(true);
         contentCanvas.createLayout(new Dimension(WIDTH, HEIGHT));
-        return new ImageRenderResult(contentCanvas.getImage());
+        return new ImageRenderResult(convertTo1BitImage(contentCanvas.getImage()));
+    }
+
+    private static BufferedImage convertTo1BitImage(BufferedImage src) {
+        BufferedImage target = new BufferedImage(src.getWidth(),src.getHeight(),BufferedImage.TYPE_BYTE_BINARY);
+        Graphics graphics = target.getGraphics();
+        graphics.drawImage(src,0,0,null);
+        return target;
     }
 
     private static final String printerStyleSheet() {

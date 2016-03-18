@@ -4,4 +4,6 @@ public interface PrintingApplicationService {
 
     PrintingResult print(PrintTask printTask);
 
+
+
 }

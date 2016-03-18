@@ -25,6 +25,13 @@
             <artifactId>stickyprint-core-api</artifactId>
         </dependency>
 
+        <!-- css box -->
+        <dependency>
+            <groupId>net.sf.cssbox</groupId>
+            <artifactId>cssbox</artifactId>
+        </dependency>
+
+
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>

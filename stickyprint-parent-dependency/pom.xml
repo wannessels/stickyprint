@@ -41,6 +41,14 @@
                 <version>${assertj.version}</version>
             </dependency>
 
+            <!--cssbox-->
+            <dependency>
+                <groupId>net.sf.cssbox</groupId>
+                <artifactId>cssbox</artifactId>
+                <version>4.11</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
     <dependencies>

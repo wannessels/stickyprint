@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,10 +54,10 @@ public class StickprintRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/preview")
+    @RequestMapping(value = "/preview", method = RequestMethod.GET)
     @SneakyThrows
     public ResponseEntity<InputStreamResource> preview(
-            @RequestParam(value = "html", required = true) String htmlToPreviewAsStickyCard) {
+            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard) {
 
         ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard));
 

@@ -13,7 +13,5 @@ public interface Printer {
     int HEIGHT_80MM = 512;
     int WIDTH_120MM = 768;
 
-    //TODO wat met exceptions?
-    @SneakyThrows
     void print(BufferedImage image);
 }

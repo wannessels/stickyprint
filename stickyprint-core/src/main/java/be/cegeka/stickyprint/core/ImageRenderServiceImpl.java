@@ -41,9 +41,11 @@ public class ImageRenderServiceImpl implements ImageRenderService{
         DOMAnalyzer da = new DOMAnalyzer(doc, documentSource.getURL());
         da.setMediaSpec(media);
         da.attributesToStyles();
-        da.addStyleSheet((URL)null, CSSNorm.stdStyleSheet(), DOMAnalyzer.Origin.AGENT);
+        da.addStyleSheet((URL)null, printerStyleSheet(), DOMAnalyzer.Origin.USER);
+        da.addStyleSheet((URL) null, CSSNorm.stdStyleSheet(), DOMAnalyzer.Origin.AGENT);
         da.addStyleSheet((URL)null, CSSNorm.userStyleSheet(), DOMAnalyzer.Origin.AGENT);
         da.addStyleSheet((URL)null, CSSNorm.formsStyleSheet(), DOMAnalyzer.Origin.AGENT);
+
         da.getStyleSheets();
         BrowserCanvas contentCanvas = new BrowserCanvas(da.getRoot(), da, documentSource.getURL());
         contentCanvas.setAutoMediaUpdate(false);
@@ -52,6 +54,10 @@ public class ImageRenderServiceImpl implements ImageRenderService{
         contentCanvas.getConfig().setLoadBackgroundImages(true);
         contentCanvas.createLayout(new Dimension(WIDTH, HEIGHT));
         return new ImageRenderResult(contentCanvas.getImage());
+    }
+
+    private static final String printerStyleSheet() {
+        return   "body { font-size: 10vmin; }";
     }
 
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sticky Print</title>
+    <script src="https://code.jquery.com/jquery-2.2.2.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+
+        tinymce.init({
+            selector: '#html'
+        });
+
+
+    </script>
+</head>
+<body>
+<h1>Sticky Print</h1>
+<script>
+    function generatePreview() {
+        jQuery("#preview").prop('src',"public/preview?html=" + tinyMCE.activeEditor.getContent());
+    }
+</script>
+<form method="get" action="public/preview" target="_self">
+    <textarea id="html" name="html">Hello, World!</textarea>
+
+    <input type="button" value="Preview" onclick="generatePreview();"/>
+</form>
+<img id="preview"/>
+</body>
+</html>

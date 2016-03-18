@@ -15,6 +15,9 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
     @Autowired
     private Printer printer;
 
+    @Autowired
+    private ImageRenderService imageRenderService;
+
     static {
         System.setProperty("com.sun.media.jai.disableMediaLib", "true");
     }
@@ -31,6 +34,13 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
         BufferedImage imageToPrint = createBitmap(printTask.getFirstLine(), printTask.getSecondLine());
         printer.print(imageToPrint);
         return new PrintingResult();
+    }
+
+    @Override
+    public ImageRenderResult print(HtmlSnippet htmlSnippet) {
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(htmlSnippet);
+        printer.print(imageRenderResult.getResult());
+        return imageRenderResult;
     }
 
     public BufferedImage createBitmap(PrintLine lijn1, PrintLine lijn2) {

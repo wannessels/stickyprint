@@ -5,5 +5,5 @@ public interface PrintingApplicationService {
     PrintingResult print(PrintTask printTask);
 
 
-
+    ImageRenderResult print(HtmlSnippet htmlSnippet);
 }

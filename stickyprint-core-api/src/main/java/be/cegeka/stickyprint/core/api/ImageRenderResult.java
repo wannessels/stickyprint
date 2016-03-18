@@ -4,11 +4,13 @@ import java.awt.image.BufferedImage;
 
 public class ImageRenderResult {
 
-    public ImageRenderResult(){
+    private final BufferedImage result;
 
+    public ImageRenderResult(BufferedImage result){
+        this.result = result;
     };
 
     public BufferedImage getResult() {
-        return null;
+        return result;
     }
 }

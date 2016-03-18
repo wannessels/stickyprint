@@ -25,9 +25,6 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
     public static final int LIJN2_OFFSET = 42;
 
     public static final Font FONT = new Font("SansSerif", Font.PLAIN, FONT_SIZE);
-    public static final int HEIGHT_58MM = 372;
-    public static final int HEIGHT_80MM = 512;
-    public static final int WIDTH_120MM = 768;
 
     @Override
     public PrintingResult print(PrintTask printTask) {
@@ -38,8 +35,8 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
 
     public BufferedImage createBitmap(PrintLine lijn1, PrintLine lijn2) {
 
-        int imgHeight = HEIGHT_58MM;
-        int imgWidth = getMinimumWidth(WIDTH_120MM, lijn1);
+        int imgHeight = Printer.HEIGHT_58MM;
+        int imgWidth = getMinimumWidth(Printer.WIDTH_120MM, lijn1);
         imgWidth = getMinimumWidth(imgWidth, lijn2);
 
         BufferedImage img = new BufferedImage(imgWidth,imgHeight,BufferedImage.TYPE_BYTE_BINARY);

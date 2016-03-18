@@ -65,7 +65,7 @@ public class ImageRenderServiceImpl implements ImageRenderService{
     }
 
     private static final String printerStyleSheet() {
-        return   "body { font-size: 10vmin; }";
+        return   "body { font-size: 13vmin; line-height: 1}";
     }
 
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sticky Print</title>
+    <script src="https://code.jquery.com/jquery-2.2.2.js"></script>
+</head>
+<body>
+<h1>Sticky Print</h1>
+<script>
+    function print() {
+        jQuery.get("/public/print?line1=" + jQuery("#line1").val() + "&line2=" + jQuery("#line2").val());
+    }
+</script>
+<form method="get" >
+    <input type="text" name="line1" id="line1"/><br/>
+    <input type="text" name="line2" id="line2"/><br/>
+
+    <input type="button" value="Print" onclick="print();"/>
+</form>
+
+<img id="preview" border="1"/>
+</body>
+</html>

@@ -2,6 +2,10 @@ package be.cegeka.stickyprint.e2e.util;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,7 +23,7 @@ public class StickyprintRequestSender {
     private CloseableHttpClient httpClient;
 
     @SneakyThrows
-    public StickyprintHttpResponse requestAdminStatusPage() {
+    public StickyprintHttpResponse requestAdminStatusPage() throws ClientProtocolException, IOException {
         CloseableHttpResponse httpResponse = httpClient.execute(httpGetRequestForAppRunningOnPort(ADMIN_STATUS_PAGE));
         return new StickyprintHttpResponse(httpResponse);
     }

@@ -4,6 +4,7 @@ import be.cegeka.stickyprint.e2e.util.StickyprintHttpResponse;
 import be.cegeka.stickyprint.e2e.util.StickyprintHttpResponseAssert;
 import be.cegeka.stickyprint.e2e.util.StickyprintRequestSender;
 import be.cegeka.stickyprint.e2e.util.config.E2EUtilConfig;
+import lombok.SneakyThrows;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,6 +30,7 @@ public class StatusPageE2ETest {
     }
 
     @Test
+    @SneakyThrows
     public void givenAStickyprintAppThatIsRunning_whenRequestingTheStatusPage_thenStatuscode200Returned() {
         StickyprintHttpResponse stickyprintHttpResponse = stickyprintRequestSender.requestAdminStatusPage();
         StickyprintHttpResponseAssert.assertThat(stickyprintHttpResponse).hasHttpStatusCodeOk();

@@ -3,6 +3,7 @@ package be.cegeka.stickyprint.core.api;
 import lombok.SneakyThrows;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Created by jov on 17-3-2016.

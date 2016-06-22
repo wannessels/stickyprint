@@ -69,25 +69,45 @@
     <br/>
 
     <textarea id="css" name="css" rows="10" cols="80" >
-        body {
+                body {
            font-family:Tahoma, Geneva, sans-serif;
            margin:0;
         }
 
         p {
           margin:0;
-          line-height:0.8;
+          line-height:0.75;
           font-size:85px;
           display:block;
         }
+div {
+    display: block;
+    clear: both;
+}
+.title {
+    float:left;
+    font-size:100px;
+    text-decoration:underline;
+    margin-bottom:10px
+}
+.sp {
+    float: right;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px
+}
 
 
     </textarea>
     <br/>
     <textarea id="html" name="html" rows="10" cols="80">
-        <p class="title">title</p>
-        <p class="sp">sp</p>
-        <p class="description">As a user I want the system to return the relevant mazdas when i click the search button</p>
+<div>
+    <p class="title">VPDS-37</p>
+    <p class="sp">7</p>
+</div>
+<div>
+        <p class="description">As the user I want the system to return the relevant mazdas when i click the search button</p>
+</div>
     </textarea>
     <br/>
     <input type="button" value="Preview" onclick="generatePreview();"/>

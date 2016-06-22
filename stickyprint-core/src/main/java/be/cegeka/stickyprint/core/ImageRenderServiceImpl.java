@@ -1,9 +1,6 @@
 package be.cegeka.stickyprint.core;
 
-import be.cegeka.stickyprint.core.api.HtmlSnippet;
-import be.cegeka.stickyprint.core.api.ImageRenderResult;
-import be.cegeka.stickyprint.core.api.ImageRenderService;
-import be.cegeka.stickyprint.core.api.Printer;
+import be.cegeka.stickyprint.core.api.*;
 import cz.vutbr.web.css.MediaSpec;
 import lombok.SneakyThrows;
 import org.fit.cssbox.css.CSSNorm;
@@ -24,21 +21,19 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class ImageRenderServiceImpl implements ImageRenderService{
 
-    private static final int HEIGHT = Printer.HEIGHT_58MM;
-    private static final int WIDTH = Printer.WIDTH_120MM;
 
     private static final boolean CROP = true;
 
     @Override
     @SneakyThrows
-    public ImageRenderResult renderImage(HtmlSnippet htmlSnippet) {
+    public ImageRenderResult renderImage(HtmlSnippet htmlSnippet, PaperHeight paperHeight, PaperWidth paperWidth) {
         DocumentSource documentSource = new StreamDocumentSource(new ByteArrayInputStream(htmlSnippet.getHtml().getBytes(StandardCharsets.UTF_8)),new URL("file://temp"),"text/html");
 
         DefaultDOMSource parser = new DefaultDOMSource(documentSource);
         Document doc = parser.parse();
         MediaSpec media = new MediaSpec("print");
-        media.setDimensions((float)WIDTH, (float)HEIGHT);
-        media.setDeviceDimensions((float)WIDTH, (float)HEIGHT);
+        media.setDimensions((float) paperWidth.getSizeInPixels(), (float)paperHeight.getSizeInPixels());
+        media.setDeviceDimensions((float)paperWidth.getSizeInPixels(), (float)paperHeight.getSizeInPixels());
         DOMAnalyzer da = new DOMAnalyzer(doc, documentSource.getURL());
         da.setMediaSpec(media);
         da.attributesToStyles();
@@ -53,7 +48,7 @@ public class ImageRenderServiceImpl implements ImageRenderService{
         contentCanvas.getConfig().setClipViewport(CROP);
         contentCanvas.getConfig().setLoadImages(true);
         contentCanvas.getConfig().setLoadBackgroundImages(true);
-        contentCanvas.createLayout(new Dimension(WIDTH, HEIGHT));
+        contentCanvas.createLayout(new Dimension(paperWidth.getSizeInPixels(), paperHeight.getSizeInPixels()));
         return new ImageRenderResult(convertTo1BitImage(contentCanvas.getImage()));
     }
 

@@ -21,6 +21,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+import static be.cegeka.stickyprint.core.api.PaperHeight.HEIGHT_80MM;
+
 @RestController
 @Slf4j
 @RequestMapping(
@@ -58,9 +60,11 @@ public class StickprintRestController {
     @SneakyThrows
     public ResponseEntity<InputStreamResource> preview(
             @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
-            @RequestParam(name="css") String css) {
+            @RequestParam(name="css") String css,
+            @RequestParam(name="height") PaperHeight paperHeight,
+            @RequestParam(name="width") PaperWidth paperWidth) {
 
-        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard,css));
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard,css), paperHeight, paperWidth);
 
         BufferedImage bufferedImage = imageRenderResult.getResult();
 
@@ -76,9 +80,10 @@ public class StickprintRestController {
     @RequestMapping(value = "/printpreview", method = RequestMethod.GET)
     @SneakyThrows
     public ResponseEntity<InputStreamResource> printpreview(
-            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard) {
+            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
+            @RequestParam(name="css") String css) {
 
-        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, ""));
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, css));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Currency;
 
 import static be.cegeka.stickyprint.core.api.PaperHeight.HEIGHT_80MM;
@@ -83,7 +84,28 @@ public class StickprintRestController {
 
     }
 
-    @RequestMapping(value = "/printpreview", method = RequestMethod.GET)
+    @RequestMapping(value = "/previewstory", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
+    @SneakyThrows
+    public ResponseEntity<String> previewStory(
+        @RequestBody StoryRequestData storyRequestData) {
+
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(storyRequestData.getHtml(),storyRequestData.getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
+
+        BufferedImage bufferedImage = imageRenderResult.getResult();
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpg", os);
+
+        String imgBase64 = new String(Base64.getEncoder().encode(os.toByteArray()));
+        System.out.println(imgBase64);
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(imgBase64);
+
+        //return ResponseEntity.ok().body("bla");
+    }
+
+    @RequestMapping(value = "/printpreview", method = RequestMethod.POST)
     @SneakyThrows
     public ResponseEntity<InputStreamResource> printpreview(
             @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,

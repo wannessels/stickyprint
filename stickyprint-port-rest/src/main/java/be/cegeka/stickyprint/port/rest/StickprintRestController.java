@@ -57,9 +57,10 @@ public class StickprintRestController {
     @RequestMapping(value = "/preview", method = RequestMethod.GET)
     @SneakyThrows
     public ResponseEntity<InputStreamResource> preview(
-            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard) {
+            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
+            @RequestParam(name="css") String css) {
 
-        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard));
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(htmlToPreviewAsStickyCard,css));
 
         BufferedImage bufferedImage = imageRenderResult.getResult();
 
@@ -77,7 +78,7 @@ public class StickprintRestController {
     public ResponseEntity<InputStreamResource> printpreview(
             @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard) {
 
-        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard));
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, ""));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

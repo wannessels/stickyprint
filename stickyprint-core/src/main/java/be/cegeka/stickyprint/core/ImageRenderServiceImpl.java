@@ -42,7 +42,7 @@ public class ImageRenderServiceImpl implements ImageRenderService{
         DOMAnalyzer da = new DOMAnalyzer(doc, documentSource.getURL());
         da.setMediaSpec(media);
         da.attributesToStyles();
-        da.addStyleSheet((URL)null, printerStyleSheet(), DOMAnalyzer.Origin.USER);
+        da.addStyleSheet((URL)null, htmlSnippet.getCss(), DOMAnalyzer.Origin.USER);
         da.addStyleSheet((URL) null, CSSNorm.stdStyleSheet(), DOMAnalyzer.Origin.AGENT);
         da.addStyleSheet((URL)null, CSSNorm.userStyleSheet(), DOMAnalyzer.Origin.AGENT);
         da.addStyleSheet((URL)null, CSSNorm.formsStyleSheet(), DOMAnalyzer.Origin.AGENT);

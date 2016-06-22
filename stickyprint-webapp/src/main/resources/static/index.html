@@ -18,7 +18,7 @@
 <h1>Sticky Print</h1>
 <script>
     function generatePreview() {
-        jQuery("#preview").prop('src',"public/preview?html=" + tinyMCE.activeEditor.getContent());
+        jQuery("#preview").prop('src',"public/preview?css=" + jQuery("#css").val() + "&html=" + tinyMCE.activeEditor.getContent());
     }
     function print() {
         jQuery.get("public/printpreview?html=" + tinyMCE.activeEditor.getContent());
@@ -26,7 +26,10 @@
 </script>
 <form method="get" action="public/preview" target="_self">
     <textarea id="html" name="html">Hello, World!</textarea>
-
+    <textarea id="css" name="css">
+        body { font-size: 13vmin; line-height: 1}
+    </textarea>
+    <br/>
     <input type="button" value="Preview" onclick="generatePreview();"/>
     <input type="button" value="Print" onclick="print();"/>
 </form>

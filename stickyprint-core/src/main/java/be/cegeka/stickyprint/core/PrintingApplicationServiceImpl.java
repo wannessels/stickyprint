@@ -37,7 +37,7 @@ public class PrintingApplicationServiceImpl implements PrintingApplicationServic
     }
 
     @Override
-    public ImageRenderResult print(HtmlSnippet htmlSnippet) {
+    public ImageRenderResult print(HtmlSnippet htmlSnippet, PaperHeight paperHeight, PaperWidth paperWidth) {
         ImageRenderResult imageRenderResult = imageRenderService.renderImage(htmlSnippet, paperHeight, paperWidth);
         printer.print(rotate90DX(imageRenderResult.getResult()));
         return imageRenderResult;

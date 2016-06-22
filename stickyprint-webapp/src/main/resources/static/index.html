@@ -18,24 +18,46 @@
 <h1>Sticky Print</h1>
 <script>
     function generatePreview() {
-        jQuery("#preview").prop('src', "public/preview?css=" + jQuery("#css").val() + "&html=" + tinyMCE.activeEditor.getContent());
+        jQuery("#preview").prop('src', "public/preview?" +
+                "css=" + jQuery("#css").val() +
+                "&html=" + tinyMCE.activeEditor.getContent()+
+                "&height=" + $("input[name='height']:checked"). val()+
+                "&width=" + $("input[name='width']:checked"). val() );
     }
     function print() {
         jQuery.get("public/printpreview?html=" + tinyMCE.activeEditor.getContent());
     }
 </script>
 <form method="get" action="public/preview" target="_self">
+    <p>paper height</p>
+    <!--HEIGHT_58MM(372), HEIGHT_80MM(512);-->
+
+    <input type="radio" name="height" value="HEIGHT_58MM" >58mm<br>
+    <input type="radio" name="height" value="HEIGHT_80MM" checked> 80mm<br>
+
+    <p>paper width</p>
+
+
+    <!--WIDTH_80MM(512), //ongeveer normale post-it-->
+    <!--WIDTH_125MM(800), //ongeveer grote post-it-->
+    <!--WIDTH_160MM(1024), //gigantisch-->
+
+    <input type="radio" name="width" value="WIDTH_80MM" >80mm(small post-it)<br>
+    <input type="radio" name="width" value="WIDTH_125MM" checked >125mm(large post-it)<br>
+    <input type="radio" name="width" value="WIDTH_160MM" >160mm(XL post-it)<br>
+
+
     <textarea id="html" name="html">Hello, World!</textarea>
     <textarea id="css" name="css" rows="10" cols="80">
         body {
            font-family:Tahoma, Geneva, sans-serif;
            margin:0;
         }
-        
+
         p {
           margin:0;
-          line-height:170px;
-          font-size:113px;
+          line-height:0.8;
+          font-size:85px;
           display:block;
         }
 

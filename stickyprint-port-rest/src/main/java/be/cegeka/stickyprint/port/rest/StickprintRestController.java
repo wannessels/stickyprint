@@ -10,16 +10,15 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Currency;
 
 import static be.cegeka.stickyprint.core.api.PaperHeight.HEIGHT_80MM;
 
@@ -37,6 +36,13 @@ public class StickprintRestController {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ImageRenderService imageRenderService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.registerCustomEditor(PaperWidth.class, new PaperWidthConverter());
+        dataBinder.registerCustomEditor(PaperHeight.class, new PaperHeightConverter());
+    }
+
 
     @RequestMapping(value = "/print")
     public ResponseEntity<String> print(
@@ -81,9 +87,12 @@ public class StickprintRestController {
     @SneakyThrows
     public ResponseEntity<InputStreamResource> printpreview(
             @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
-            @RequestParam(name="css") String css) {
+            @RequestParam(name="css") String css,
+            @RequestParam(name="height") PaperHeight paperHeight,
+            @RequestParam(name="width") PaperWidth paperWidth) {
 
-        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, css));
+
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, css),paperHeight, paperWidth);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

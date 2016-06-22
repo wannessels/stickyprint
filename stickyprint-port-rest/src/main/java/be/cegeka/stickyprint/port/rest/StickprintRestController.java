@@ -113,6 +113,21 @@ public class StickprintRestController {
         //return ResponseEntity.ok().body("bla");
     }
 
+    @RequestMapping(value = "/printpreviewstory", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
+    @SneakyThrows
+    public ResponseEntity<String> printPreviewStory(
+            @RequestBody StoryRequestData storyRequestData) {
+
+        String html = createHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
+
+
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(html,getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    }
+
+
     @SneakyThrows
     private String createHtml(String number, String sp, String title) {
         String htmlTemplate = IOUtils.toString(resourceLoader.getResource("classpath:mazdastory.html").getInputStream());

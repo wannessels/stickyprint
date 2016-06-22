@@ -15,8 +15,9 @@
 
     function generatePreview() {
         var requestData = {
-            css: jQuery("#css").val(),
-            html: jQuery("#html").val(),
+            number: jQuery("#number").val(),
+            sp: jQuery("#sp").val(),
+            title: jQuery("#title").val(),
             paperWidth: $("input[name='width']:checked").val(),
             paperHeight: $("input[name='height']:checked").val()
         };
@@ -43,72 +44,33 @@
     }*/
 </script>
 <form method="get" target="_self">
-    <p>paper height</p>
-    <!--HEIGHT_58MM(372), HEIGHT_80MM(512);-->
+    <div>
+        <div style="width:120px; float:left">
 
-    <input type="radio" name="height" value="HEIGHT_58MM" >58mm<br>
-    <input type="radio" name="height" value="HEIGHT_80MM" checked> 80mm<br>
+            <p>paper height</p>
+            <!--HEIGHT_58MM(372), HEIGHT_80MM(512);-->
 
-    <p>paper width</p>
+            <input type="radio" name="height" value="HEIGHT_58MM" >58mm<br>
+            <input type="radio" name="height" value="HEIGHT_80MM" checked>80mm<br>
+        </div>
+        <div style="float:left">
+            <p>paper width</p>
+            <!--WIDTH_80MM(512), //ongeveer normale post-it-->
+            <!--WIDTH_125MM(800), //ongeveer grote post-it-->
+            <!--WIDTH_160MM(1024), //gigantisch-->
 
+            <input type="radio" name="width" value="WIDTH_80MM" >80mm(small post-it)<br>
+            <input type="radio" name="width" value="WIDTH_125MM" checked >125mm(large post-it)<br>
+            <input type="radio" name="width" value="WIDTH_160MM" >160mm(XL post-it)<br>
 
-    <!--WIDTH_80MM(512), //ongeveer normale post-it-->
-    <!--WIDTH_125MM(800), //ongeveer grote post-it-->
-    <!--WIDTH_160MM(1024), //gigantisch-->
-
-    <input type="radio" name="width" value="WIDTH_80MM" >80mm(small post-it)<br>
-    <input type="radio" name="width" value="WIDTH_125MM" checked >125mm(large post-it)<br>
-    <input type="radio" name="width" value="WIDTH_160MM" >160mm(XL post-it)<br>
-
-
-
-    <input type="text" name="storytitle" placeholder="Title" maxlength="12"/>
-    <input type="text" name="storypoints" placeholder="SP" maxlength="2"/>
-    <input type="text" name="storydescription" placeholder="Description"/>
-
+        </div>
+    </div>
+    <div style="clear:both">
+        <input type="text" id="number" placeholder="Number" maxlength="12" size="14"/>
+        <input type="text" id="sp" placeholder="SP" maxlength="2" size="4"/> <br/>
+        <input type="text" id="title" placeholder="Title" size="100"/>
+    </div>
     <br/>
-
-    <textarea id="css" name="css" rows="10" cols="80" >
-                body {
-           font-family:Tahoma, Geneva, sans-serif;
-           margin:0;
-        }
-
-        p {
-          margin:0;
-          line-height:0.75;
-          font-size:85px;
-          display:block;
-        }
-div {
-    display: block;
-    clear: both;
-}
-.title {
-    float:left;
-    font-size:100px;
-    text-decoration:underline;
-    margin-bottom:10px
-}
-.sp {
-    float: right;
-    border-width: 1px;
-    border-style: solid;
-    padding: 10px
-}
-
-
-    </textarea>
-    <br/>
-    <textarea id="html" name="html" rows="10" cols="80">
-<div>
-    <p class="title">VPDS-37</p>
-    <p class="sp">7</p>
-</div>
-<div>
-        <p class="description">As the user I want the system to return the relevant mazdas when i click the search button</p>
-</div>
-    </textarea>
     <br/>
     <input type="button" value="Preview" onclick="generatePreview();"/>
     <input type="button" value="Print" onclick="print();"/>

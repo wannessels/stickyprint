@@ -9,8 +9,9 @@ import lombok.ToString;
 @Getter @NoArgsConstructor @ToString
 public class StoryRequestData {
 
-    private String html;
-    private String css;
+    private String number;
+    private String title;
+    private String sp;
     private PaperWidth paperWidth;
     private PaperHeight paperHeight;
 }

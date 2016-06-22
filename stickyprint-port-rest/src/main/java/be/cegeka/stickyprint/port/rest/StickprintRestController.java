@@ -4,9 +4,12 @@ package be.cegeka.stickyprint.port.rest;
 import be.cegeka.stickyprint.core.api.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +40,9 @@ public class StickprintRestController {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ImageRenderService imageRenderService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -89,7 +95,9 @@ public class StickprintRestController {
     public ResponseEntity<String> previewStory(
         @RequestBody StoryRequestData storyRequestData) {
 
-        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(storyRequestData.getHtml(),storyRequestData.getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
+        String html = createHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
+
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(html,getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
 
         BufferedImage bufferedImage = imageRenderResult.getResult();
 
@@ -103,6 +111,12 @@ public class StickprintRestController {
                 .body(imgBase64);
 
         //return ResponseEntity.ok().body("bla");
+    }
+
+    @SneakyThrows
+    private String createHtml(String number, String sp, String title) {
+        String htmlTemplate = IOUtils.toString(resourceLoader.getResource("classpath:mazdastory.html").getInputStream());
+        return String.format(htmlTemplate, number, sp, title);
     }
 
     @RequestMapping(value = "/printpreview", method = RequestMethod.POST)
@@ -120,4 +134,8 @@ public class StickprintRestController {
 
     }
 
+    @SneakyThrows
+    public String getCss() {
+        return IOUtils.toString(resourceLoader.getResource("classpath:mazdastory.css").getInputStream());
+    }
 }

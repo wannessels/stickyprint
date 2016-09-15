@@ -117,7 +117,7 @@
                 <!-- Non maven lifecycle plugins
                 Note: if no phase is defined, the default phase is used. This can be found in the documentation of that plugin
                 -->
-
+<!--
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -128,7 +128,6 @@
                             <goals>
                                 <goal>analyze-only</goal>
                             </goals>
-                            <!-- default binding to verify phase -->
                             <configuration>
                                 <failOnWarning>true</failOnWarning>
                                 <ignoreNonCompile>true</ignoreNonCompile>
@@ -141,7 +140,7 @@
                         </execution>
                     </executions>
                 </plugin>
-
+-->
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -192,12 +191,12 @@
                                 <fail>true</fail>
                             </configuration>
                         </execution>
+                        <!--
                         <execution>
                             <id>enforce-maven-best-practices</id>
                             <goals>
                                 <goal>enforce</goal>
                             </goals>
-                            <!-- default binding to validate phase -->
                             <configuration>
                                 <rules>
                                     <requirePluginVersions>
@@ -213,6 +212,7 @@
                                 <fail>true</fail>
                             </configuration>
                         </execution>
+                    -->
                     </executions>
                 </plugin>
 

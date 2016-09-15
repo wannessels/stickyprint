@@ -4,7 +4,6 @@ package be.cegeka.stickyprint.port.rest;
 import be.cegeka.stickyprint.core.api.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Base64;
-import java.util.Currency;
-
-import static be.cegeka.stickyprint.core.api.PaperHeight.HEIGHT_80MM;
 
 @RestController
 @Slf4j
@@ -90,14 +86,29 @@ public class StickprintRestController {
 
     }
 
+    @RequestMapping(value = "/printpreview", method = RequestMethod.GET)
+    @SneakyThrows
+    public ResponseEntity<InputStreamResource> printpreview(
+            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
+            @RequestParam(name="css") String css,
+            @RequestParam(name="height") PaperHeight paperHeight,
+            @RequestParam(name="width") PaperWidth paperWidth) {
+
+
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, css),paperHeight, paperWidth);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    }
+
     @RequestMapping(value = "/previewstory", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
     @SneakyThrows
     public ResponseEntity<String> previewStory(
         @RequestBody StoryRequestData storyRequestData) {
 
-        String html = createHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
+        String html = createStoryHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
 
-        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(html,getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
+        ImageRenderResult imageRenderResult = imageRenderService.renderImage(new HtmlSnippet(html, getStoryCSS()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
 
         BufferedImage bufferedImage = imageRenderResult.getResult();
 
@@ -118,10 +129,10 @@ public class StickprintRestController {
     public ResponseEntity<String> printPreviewStory(
             @RequestBody StoryRequestData storyRequestData) {
 
-        String html = createHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
+        String html = createStoryHtml(storyRequestData.getNumber(), storyRequestData.getSp(), storyRequestData.getTitle());
 
 
-        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(html,getCss()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
+        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(html, getStoryCSS()), storyRequestData.getPaperHeight(), storyRequestData.getPaperWidth());
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -129,28 +140,13 @@ public class StickprintRestController {
 
 
     @SneakyThrows
-    private String createHtml(String number, String sp, String title) {
+    private String createStoryHtml(String number, String sp, String title) {
         String htmlTemplate = IOUtils.toString(resourceLoader.getResource("classpath:mazdastory.html").getInputStream());
         return String.format(htmlTemplate, number, sp, title);
     }
 
-    @RequestMapping(value = "/printpreview", method = RequestMethod.POST)
     @SneakyThrows
-    public ResponseEntity<InputStreamResource> printpreview(
-            @RequestParam(name = "html", required = true) String htmlToPreviewAsStickyCard,
-            @RequestParam(name="css") String css,
-            @RequestParam(name="height") PaperHeight paperHeight,
-            @RequestParam(name="width") PaperWidth paperWidth) {
-
-
-        ImageRenderResult imageRenderResult = printingApplicationService.print(new HtmlSnippet(htmlToPreviewAsStickyCard, css),paperHeight, paperWidth);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
-    }
-
-    @SneakyThrows
-    public String getCss() {
+    public String getStoryCSS() {
         return IOUtils.toString(resourceLoader.getResource("classpath:mazdastory.css").getInputStream());
     }
 }

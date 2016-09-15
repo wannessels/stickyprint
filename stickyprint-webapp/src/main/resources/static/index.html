@@ -25,7 +25,11 @@
                 "&width=" + $("input[name='width']:checked"). val() );
     }
     function print() {
-        jQuery.get("public/printpreview?html=" + tinyMCE.activeEditor.getContent());
+        jQuery.get("/public/printpreview?" +
+                "css=" + jQuery("#css").val() +
+                "&html=" + tinyMCE.activeEditor.getContent()+
+                "&height=" + $("input[name='height']:checked"). val()+
+                "&width=" + $("input[name='width']:checked"). val() );
     }
 </script>
 <form method="get" action="public/preview" target="_self">

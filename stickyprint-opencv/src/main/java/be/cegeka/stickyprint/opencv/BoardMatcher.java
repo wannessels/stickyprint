@@ -21,32 +21,37 @@ public class BoardMatcher {
     }
 
     public static void main(String[] args) {
-        String bookObject = "C:\\PrivateWS\\sources\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\images\\bookobject.jpg";
-        String bookScene = "C:\\PrivateWS\\sources\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\images\\bookscene.jpg";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\2 fix search on portal.bmp";
+        String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\5 fill in Camis Timesheet.bmp";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\23 find extra parking space.bmp";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\123 buy another company.bmp";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\124 reorganize divisions.bmp";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\todo.jpg";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\in progress.jpg";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\blocked.jpg";
+        //String objectToFind = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\done.jpg";
+        String scene = "C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\board-1.jpg";
+
+        FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SIFT);
+        DescriptorExtractor descriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.SIFT);
+        DescriptorMatcher descriptorMatcher = DescriptorMatcher.create(DescriptorMatcher.FLANNBASED);
+        System.out.println(Runtime.getRuntime().maxMemory());
 
         System.out.println("Started....");
         System.out.println("Loading images...");
-        Mat objectImage = Highgui.imread(bookObject, Highgui.CV_LOAD_IMAGE_COLOR);
-        Mat sceneImage = Highgui.imread(bookScene, Highgui.CV_LOAD_IMAGE_COLOR);
+        Mat objectImage = Highgui.imread(objectToFind, Highgui.CV_LOAD_IMAGE_COLOR);
+        Mat sceneImage = Highgui.imread(scene, Highgui.CV_LOAD_IMAGE_COLOR);
 
         MatOfKeyPoint objectKeyPoints = new MatOfKeyPoint();
-        FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SURF);
+
         System.out.println("Detecting key points...");
         featureDetector.detect(objectImage, objectKeyPoints);
         KeyPoint[] keypoints = objectKeyPoints.toArray();
         System.out.println(keypoints);
 
         MatOfKeyPoint objectDescriptors = new MatOfKeyPoint();
-        DescriptorExtractor descriptorExtractor = DescriptorExtractor.create(DescriptorExtractor.SURF);
         System.out.println("Computing descriptors...");
         descriptorExtractor.compute(objectImage, objectKeyPoints, objectDescriptors);
-
-        // Create the matrix for output image.
-        Mat outputImage = new Mat(objectImage.rows(), objectImage.cols(), Highgui.CV_LOAD_IMAGE_COLOR);
-        Scalar newKeypointColor = new Scalar(255, 0, 0);
-
-        System.out.println("Drawing key points on object image...");
-        Features2d.drawKeypoints(objectImage, objectKeyPoints, outputImage, newKeypointColor, 0);
 
         // Match object image with the scene image
         MatOfKeyPoint sceneKeyPoints = new MatOfKeyPoint();
@@ -60,14 +65,13 @@ public class BoardMatcher {
         Scalar matchestColor = new Scalar(0, 255, 0);
 
         List<MatOfDMatch> matches = new LinkedList<MatOfDMatch>();
-        DescriptorMatcher descriptorMatcher = DescriptorMatcher.create(DescriptorMatcher.FLANNBASED);
         System.out.println("Matching object and scene images...");
         descriptorMatcher.knnMatch(objectDescriptors, sceneDescriptors, matches, 2);
 
         System.out.println("Calculating good match list...");
         LinkedList<DMatch> goodMatchesList = new LinkedList<DMatch>();
 
-        float nndrRatio = 0.7f;
+        float nndrRatio = 0.8f;
         for (int i = 0; i < matches.size(); i++) {
             MatOfDMatch matofDMatch = matches.get(i);
             DMatch[] dmatcharray = matofDMatch.toArray();
@@ -112,7 +116,7 @@ public class BoardMatcher {
             System.out.println("Transforming object corners to scene corners...");
             Core.perspectiveTransform(obj_corners, scene_corners, homography);
 
-            Mat img = Highgui.imread(bookScene, Highgui.CV_LOAD_IMAGE_COLOR);
+            Mat img = Highgui.imread(scene, Highgui.CV_LOAD_IMAGE_COLOR);
 
             Core.line(img, new Point(scene_corners.get(0, 0)), new Point(scene_corners.get(1, 0)), new Scalar(0, 255, 0), 4);
             Core.line(img, new Point(scene_corners.get(1, 0)), new Point(scene_corners.get(2, 0)), new Scalar(0, 255, 0), 4);
@@ -123,11 +127,17 @@ public class BoardMatcher {
             MatOfDMatch goodMatches = new MatOfDMatch();
             goodMatches.fromList(goodMatchesList);
 
+            // Create the matrix for output image.
+            Mat outputImage = new Mat(objectImage.rows(), objectImage.cols(), Highgui.CV_LOAD_IMAGE_COLOR);
+            Scalar newKeypointColor = new Scalar(255, 0, 0);
+
+            System.out.println("Drawing key points on object image...");
+            Features2d.drawKeypoints(objectImage, objectKeyPoints, outputImage, newKeypointColor, 0);
             Features2d.drawMatches(objectImage, objectKeyPoints, sceneImage, sceneKeyPoints, goodMatches, matchoutput, matchestColor, newKeypointColor, new MatOfByte(), 2);
 
-            Highgui.imwrite("C:\\PrivateWS\\sources\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\images\\outputImage.jpg", outputImage);
-            Highgui.imwrite("C:\\PrivateWS\\sources\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\images\\matchoutput.jpg", matchoutput);
-            Highgui.imwrite("C:\\PrivateWS\\sources\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\images\\img.jpg", img);
+            Highgui.imwrite("C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\outputImage.jpg", outputImage);
+            Highgui.imwrite("C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\matchoutput.jpg", matchoutput);
+            Highgui.imwrite("C:\\Users\\Wannes\\IdeaProjects\\stickyprint\\stickyprint-opencv\\src\\main\\resources\\board\\img.jpg", img);
         } else {
             System.out.println("Object Not Found");
         }
